@@ -3,15 +3,17 @@
 #include <iostream>
 
 Game::Game() :
-	m_window{ sf::VideoMode{ 1900U, 1250U, 32U }, "Dose Duty" },
-	m_exitGame{false} //when true game will exit
+	m_window{ sf::VideoMode{ 1900U, 1080U, 32U }, "Dose Duty" },
+	m_exitGame{false}, //when true game will exit
 	//m_playerMovement{ 0.0f, 0.0f }// Initialize player movement
+	m_menus(m_window)
 {
 	//setupFontAndText();  
-	setupWallpaper();
-	setupPlayer();
+	Init();
+	/*setupPlayer();
 	setupFriends();
-	setupCouch();
+	setupCouch();*/
+	
 }
 
 Game::~Game()
@@ -51,6 +53,7 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		m_menus.processInput(newEvent);
 	}
 }
 
@@ -73,16 +76,22 @@ void Game::processEvents()
 
 
 
-void Game::setupWallpaper()
+void Game::Init()
 {
-	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\room.png"))
+	//if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\room.png"))
+	//{
+	//	std::cout << "Problem loading background" << std::endl;
+	//}
+	//m_backgroundSprite.setTexture(m_backgroundTexture);
+	////m_backgroundSprite.setPosition(0, 0);
+	//m_backgroundSprite.setScale(static_cast<float>(m_window.getSize().x) / m_backgroundTexture.getSize().x,
+	//	static_cast<float>(m_window.getSize().y) / m_backgroundTexture.getSize().y);
+
+	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
 	{
-		std::cout << "Problem loading background" << std::endl;
+		std::cout << "problem loading arial black font" << std::endl;
 	}
-	m_backgroundSprite.setTexture(m_backgroundTexture);
-	//m_backgroundSprite.setPosition(0, 0);
-	m_backgroundSprite.setScale(static_cast<float>(m_window.getSize().x) / m_backgroundTexture.getSize().x,
-		static_cast<float>(m_window.getSize().y) / m_backgroundTexture.getSize().y);
+	m_menus.initialise(m_ArialBlackfont);
 
 }
 
@@ -135,53 +144,58 @@ void Game::processKeys(sf::Event t_event)
 void Game::render()
 {
 	m_window.clear();
-	m_window.draw(m_backgroundSprite);
+	/*m_window.draw(m_backgroundSprite);
 	m_window.draw(m_couchSprite);
 	m_window.draw(m_player);
-	m_window.draw(m_friend);
+	m_window.draw(m_friend);*/
+
+	m_menus.render(m_window);
 	
 	m_window.display();
 }
 
 void Game::update(sf::Time t_deltaTime)
 {
-	sf::Vector2f m_playerMovement{ 0.0f, 0.0f };
 
-	// Player movement
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		m_player.move(0.0f, -playerSpeed * t_deltaTime.asSeconds());
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		m_player.move(-playerSpeed * t_deltaTime.asSeconds(), 0.0f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		m_player.move(0.0f, playerSpeed * t_deltaTime.asSeconds());
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		m_player.move(playerSpeed * t_deltaTime.asSeconds(), 0.0f);
-	
-	
-	// Save the current position
-	sf::Vector2f currentPosition = m_player.getPosition();
+	m_menus.update(t_deltaTime);
 
-	// Update player position
-	m_player.move(m_playerMovement);
+	//sf::Vector2f m_playerMovement{ 0.0f, 0.0f };
 
-	// Check for collision with the couch
-	sf::FloatRect playerBoundingBox = m_player.getGlobalBounds();
-	sf::FloatRect couchBoundingBox(
-		m_couchSprite.getPosition().x,
-		m_couchSprite.getPosition().y + m_couchSprite.getLocalBounds().height / 2.0f,
-		m_couchSprite.getLocalBounds().width * 9.0f,
-		m_couchSprite.getLocalBounds().height / 2.0f
-	);
+	//// Player movement
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	//	m_player.move(0.0f, -playerSpeed * t_deltaTime.asSeconds());
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	//	m_player.move(-playerSpeed * t_deltaTime.asSeconds(), 0.0f);
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	//	m_player.move(0.0f, playerSpeed * t_deltaTime.asSeconds());
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	//	m_player.move(playerSpeed * t_deltaTime.asSeconds(), 0.0f);
+	//
+	//
+	//// Save the current position
+	//sf::Vector2f currentPosition = m_player.getPosition();
 
-	// Check for collision before moving the player
-	if (playerBoundingBox.intersects(couchBoundingBox))
-	{
-		// Revert the player's position to the previous position if a collision occurred
-		m_player.setPosition(currentPosition);
-	}
+	//// Update player position
+	//m_player.move(m_playerMovement);
 
-	if (m_exitGame)
-	{
-		m_window.close();
-	}
+	//// Check for collision with the couch
+	//sf::FloatRect playerBoundingBox = m_player.getGlobalBounds();
+	//sf::FloatRect couchBoundingBox(
+	//	m_couchSprite.getPosition().x,
+	//	m_couchSprite.getPosition().y + m_couchSprite.getLocalBounds().height / 2.0f,
+	//	m_couchSprite.getLocalBounds().width * 9.0f,
+	//	m_couchSprite.getLocalBounds().height / 2.0f
+	//);
+
+	//// Check for collision before moving the player
+	//if (playerBoundingBox.intersects(couchBoundingBox))
+	//{
+	//	// Revert the player's position to the previous position if a collision occurred
+	//	m_player.setPosition(currentPosition);
+	//}
+
+	//if (m_exitGame)
+	//{
+	//	m_window.close();
+	//}
 }

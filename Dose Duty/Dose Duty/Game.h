@@ -3,6 +3,7 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include"Menus.h"
 
 class Game
 {
@@ -19,7 +20,7 @@ private:
 	void render();
 	
 	//void setupFontAndText();
-	void setupWallpaper();
+	void Init();
 	void setupPlayer();
 	void setupFriends();
 	void setupCouch();
@@ -37,7 +38,8 @@ private:
 
 	sf::Sprite m_backgroundSprite;
 	sf::Texture m_backgroundTexture; 
-	
+
+	Menus m_menus;
 
 	bool m_exitGame; 
 
