@@ -18,15 +18,28 @@ private:
 	void update(sf::Time t_deltaTime);
 	void render();
 	
-	void setupFontAndText();
-	void setupSprite();
+	//void setupFontAndText();
+	void setupWallpaper();
+	void setupPlayer();
+	void setupFriends();
+	void setupCouch();
 
-	sf::RenderWindow m_window; // main SFML window
-	sf::Font m_ArialBlackfont; // font used by message
-	sf::Text m_welcomeMessage; // text used for message on screen
-	sf::Texture m_logoTexture; // texture used for sfml logo
-	sf::Sprite m_logoSprite; // sprite used for sfml logo
-	bool m_exitGame; // control exiting game
+	sf::RenderWindow m_window; 
+	sf::Font m_ArialBlackfont; 
+
+	sf::RectangleShape m_player;
+	float playerSpeed;
+
+	sf::RectangleShape m_friend;
+
+	sf::Sprite m_couchSprite;
+	sf::Texture m_couchTexture;
+
+	sf::Sprite m_backgroundSprite;
+	sf::Texture m_backgroundTexture; 
+	
+
+	bool m_exitGame; 
 
 };
 
