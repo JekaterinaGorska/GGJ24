@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include"Menus.h"
+#include"MunchMeter.h"
 
 class Game
 {
@@ -38,7 +39,6 @@ private:
 
 	sf::Sprite m_backgroundSprite;
 	sf::Texture m_backgroundTexture; 
-
 	Menus m_menus;
 
 	bool m_exitGame; 

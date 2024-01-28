@@ -17,23 +17,39 @@ void GamePlay::update(sf::Time& t_deltaTime)
 
 	// Player movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		m_player.move(0.0f, -playerSpeed * t_deltaTime.asSeconds());
+	{
+		m_playerSprite.move(0.0f, -playerSpeed * t_deltaTime.asSeconds());
+		animatePlayer();
+		//m_playerSprite.setScale(1, 1);
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		m_player.move(-playerSpeed * t_deltaTime.asSeconds(), 0.0f);
+	{
+		m_playerSprite.move(-playerSpeed * t_deltaTime.asSeconds(), 0.0f);
+		animatePlayer();
+		//m_playerSprite.setScale(-1, 1);
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		m_player.move(0.0f, playerSpeed * t_deltaTime.asSeconds());
+	{
+		m_playerSprite.move(0.0f, playerSpeed * t_deltaTime.asSeconds());
+		animatePlayer();
+		//m_playerSprite.setScale(-1, 1);
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		m_player.move(playerSpeed * t_deltaTime.asSeconds(), 0.0f);
+	{
+		m_playerSprite.move(playerSpeed * t_deltaTime.asSeconds(), 0.0f);
+		animatePlayer();
+		//m_playerSprite.setScale(1, 1);
+	}
 	
 	
 	// Save the current position
-	sf::Vector2f currentPosition = m_player.getPosition();
+	sf::Vector2f currentPosition = m_playerSprite.getPosition();
 
 	// Update player position
 	m_player.move(m_playerMovement);
 
 	// Check for collision with the couch
-	sf::FloatRect playerBoundingBox = m_player.getGlobalBounds();
+	sf::FloatRect playerBoundingBox = m_playerSprite.getGlobalBounds();
 	sf::FloatRect couchBoundingBox(
 		m_couchSprite.getPosition().x,
 		m_couchSprite.getPosition().y + m_couchSprite.getLocalBounds().height / 2.0f,
@@ -45,8 +61,24 @@ void GamePlay::update(sf::Time& t_deltaTime)
 	if (playerBoundingBox.intersects(couchBoundingBox))
 	{
 		// Revert the player's position to the previous position if a collision occurred
-		m_player.setPosition(currentPosition);
+		m_playerSprite.setPosition(currentPosition);
 	}
+
+	friendMunchMeter.update(t_deltaTime);
+	friendMunchMeter.setPosition(m_friend.getPosition());
+
+
+	munchieObject.update(t_deltaTime);
+
+	m_playerInteractionArea.setPosition(
+		sf::Vector2f(
+			m_playerSprite.getPosition().x - 50,
+			m_playerSprite.getPosition().y
+	));
+
+	ItemCollisions();
+	
+
 }
 /// <summary>
 /// draws everythign in the gameplay screen
@@ -57,7 +89,11 @@ void GamePlay::render(sf::RenderWindow& t_window)
 	t_window.draw(m_backgroundSprite);
 	t_window.draw(m_couchSprite);
 	t_window.draw(m_player);
+	t_window.draw(m_playerInteractionArea);
+	t_window.draw(m_playerSprite);
+	friendMunchMeter.render(t_window);
 	t_window.draw(m_friend);
+	munchieObject.render(t_window);
 }
 
 void GamePlay::processInput(sf::Event& t_event)
@@ -95,7 +131,23 @@ void GamePlay::setupPlayer()
 	m_player.setPosition(100, 100);
 	m_player.setScale(5.0f, 5.0f);
 
+
+	if (!m_playerTexture.loadFromFile("ASSETS\\IMAGES\\SSNG.png"))
+	{
+		std::cout << "error loading sprite sheet";
+	}
+
+	m_playerSprite.setTexture(m_playerTexture);
+	m_playerSprite.setPosition(100, 100);
+	m_playerSprite.setTextureRect(sf::IntRect(0, 990, 176 * 2, 352 * 2));
+	m_playerSprite.setOrigin(176, 352);
+
 	playerSpeed = 200.0f;
+
+	m_playerInteractionArea.setSize(sf::Vector2f(300, 300));
+	m_playerInteractionArea.setFillColor(sf::Color(145, 145, 145, 132));
+	m_playerInteractionArea.setPosition(m_playerSprite.getPosition());
+
 }
 
 void GamePlay::setupFriends()
@@ -118,6 +170,48 @@ void GamePlay::setupCouch()
 	m_couchSprite.setPosition(1155, 500);
 	m_couchSprite.setScale(9.0f, 9.0f);
 
+}
+
+void GamePlay::setUpObjects()
+{
+
+}
+
+void GamePlay::animatePlayer()
+{
+	playerTime++;
+	if (playerTime > 7)
+	{
+		playerFrame++;
+		if (playerFrame > 3) 
+		{
+			playerFrame = 0; 
+		}
+		playerTime = 0;
+	}
+	int col = playerFrame % 3; 
+	int row = 990; 
+
+	
+
+	sf::IntRect rectSourceSprite;
+	rectSourceSprite.height = 352 * 2;
+	rectSourceSprite.width = 176 * 2;
+	rectSourceSprite.left = col * rectSourceSprite.width;
+	rectSourceSprite.top = 990;
+	m_playerSprite.setTextureRect(rectSourceSprite);
+	//m_playerSprite.setOrigin(m_playerSprite.getTextureRect().width / 2, m_playerSprite.getTextureRect().height / 2);
+
+	std::cout << col * (352 * 2) << " , ";
+}
+
+void GamePlay::ItemCollisions()
+{
+	if (munchieObject.getShape().getGlobalBounds().intersects(m_playerInteractionArea.getGlobalBounds()))
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+			munchieObject.setOffScreen();
+	}
 }
 
 
