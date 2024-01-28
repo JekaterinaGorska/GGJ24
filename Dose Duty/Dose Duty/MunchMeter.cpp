@@ -33,8 +33,8 @@ void MunchMeter::initialise()
 
 void MunchMeter::setPosition(sf::Vector2f t_vec)
 {
-	MunchMeterSprite.setPosition(sf::Vector2f(t_vec.x, t_vec.y - 50));
-	munchMeterOutline.setPosition(sf::Vector2f(t_vec.x, t_vec.y - 50));
+	MunchMeterSprite.setPosition(sf::Vector2f(t_vec.x + 70, t_vec.y - 130));
+	munchMeterOutline.setPosition(sf::Vector2f(t_vec.x +70, t_vec.y - 130));
 }
 
 void MunchMeter::gainMunchies()
@@ -58,4 +58,9 @@ void MunchMeter::setMeterColor()
 	{
 		MunchMeterSprite.setFillColor(sf::Color::Red);
 	}
+}
+
+void MunchMeter::lessenMunchies()
+{
+	currentMuchMeter += 15;
 }

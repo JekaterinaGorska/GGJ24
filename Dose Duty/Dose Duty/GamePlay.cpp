@@ -65,7 +65,7 @@ void GamePlay::update(sf::Time& t_deltaTime)
 	}
 
 	friendMunchMeter.update(t_deltaTime);
-	friendMunchMeter.setPosition(m_friend.getPosition());
+	friendMunchMeter.setPosition(m_friendSprite.getPosition());
 
 
 	munchieObject.update(t_deltaTime);
@@ -77,6 +77,13 @@ void GamePlay::update(sf::Time& t_deltaTime)
 	));
 
 	ItemCollisions();
+
+	m_friendInteractionArea.setPosition(sf::Vector2f(
+		m_friendSprite.getPosition().x - 50,
+		m_friendSprite.getPosition().y - 150
+	));
+
+	InteractWithFriend();
 	
 
 }
@@ -88,11 +95,15 @@ void GamePlay::render(sf::RenderWindow& t_window)
 {
 	t_window.draw(m_backgroundSprite);
 	t_window.draw(m_couchSprite);
-	t_window.draw(m_player);
-	t_window.draw(m_playerInteractionArea);
+	//t_window.draw(m_player);
+	//t_window.draw(m_playerInteractionArea);
 	t_window.draw(m_playerSprite);
 	friendMunchMeter.render(t_window);
-	t_window.draw(m_friend);
+	//t_window.draw(m_friend);
+	//t_window.draw(m_friendInteractionArea);
+	t_window.draw(m_friendSprite);
+	if(hasObject)
+		t_window.draw(UIObject);
 	munchieObject.render(t_window);
 }
 
@@ -107,6 +118,7 @@ void GamePlay::initialise()
 	setupFriends();
 	setupPlayer();
 	setupWallpaper();
+	setUpUi();
 }
 
 void GamePlay::setupWallpaper()
@@ -152,12 +164,25 @@ void GamePlay::setupPlayer()
 
 void GamePlay::setupFriends()
 {
+	if (!m_playerTexture.loadFromFile("ASSETS\\IMAGES\\SSNG.png"))
+	{
+		std::cout << "error loading sprite sheet";
+	}
+	m_friendSprite.setTexture(m_playerTexture);
+	m_friendSprite.setPosition(700, 300);
+	m_friendSprite.setTextureRect(sf::IntRect(0, 0, 176 * 2, 352 * 2));
+	m_friendSprite.setOrigin(176, 352);
+
 	m_friend.setSize(sf::Vector2f(16, 32));
 	m_friend.setOutlineColor(sf::Color::Cyan);
 	m_friend.setFillColor(sf::Color::Yellow);
 	m_friend.setOutlineThickness(3);
 	m_friend.setPosition(200, 600);
 	m_friend.setScale(5.0f, 5.0f);
+
+	m_friendInteractionArea.setSize(sf::Vector2f(300, 300));
+	m_friendInteractionArea.setFillColor(sf::Color(145, 145, 145, 132));
+	m_friendInteractionArea.setPosition(m_playerSprite.getPosition());
 }
 
 void GamePlay::setupCouch()
@@ -210,8 +235,34 @@ void GamePlay::ItemCollisions()
 	if (munchieObject.getShape().getGlobalBounds().intersects(m_playerInteractionArea.getGlobalBounds()))
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		{
 			munchieObject.setOffScreen();
+			hasObject = true;
+		}
 	}
+}
+
+void GamePlay::InteractWithFriend()
+{
+	if (m_friendInteractionArea.getGlobalBounds().intersects(m_playerInteractionArea.getGlobalBounds()))
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && hasObject)
+		{
+			hasObject = false;
+			friendMunchMeter.lessenMunchies();
+		}
+	}
+}
+
+void GamePlay::setUpUi()
+{
+	if (!UIWaterTexture.loadFromFile("ASSETS\\IMAGES\\Water.png"))
+	{
+		std::cout << "Problem loading file" << std::endl;
+	}
+	UIObject.setTexture(UIWaterTexture);
+	UIObject.setPosition(1600, 0);
+	UIObject.setScale(0.15, 0.15);
 }
 
 

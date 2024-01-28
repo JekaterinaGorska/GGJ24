@@ -20,5 +20,6 @@ public:
 	void setPosition(sf::Vector2f t_vec);
 	void gainMunchies();
 	void setMeterColor();
+	void lessenMunchies();
 
 };

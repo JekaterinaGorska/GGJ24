@@ -24,13 +24,17 @@ private:
 	void animatePlayer();
 
 	void ItemCollisions();
+	void InteractWithFriend();
 
 	sf::RectangleShape m_player;
 	float playerSpeed;
 
 	sf::RectangleShape m_friend;
+	sf::Sprite m_friendSprite;
+	sf::Texture m_friendTexture;
 
 	sf::RectangleShape m_playerInteractionArea; 
+	sf::RectangleShape m_friendInteractionArea;
 
 	sf::Sprite m_couchSprite;
 	sf::Texture m_couchTexture;
@@ -45,6 +49,11 @@ private:
 	int playerFrame = 0;
 
 	MunchieObject munchieObject;
+
+	bool hasObject = false;
+	sf::Sprite UIObject;
+	sf::Texture UIWaterTexture;
+	void setUpUi();
 
 
 
