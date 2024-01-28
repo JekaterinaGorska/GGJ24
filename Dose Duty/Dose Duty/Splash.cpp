@@ -3,8 +3,8 @@
 
 void Splash::render(sf::RenderWindow& window)
 {
-	window.draw(text);
-	window.draw(m_splashSprite);
+	//window.draw(text);
+	//window.draw(m_splashSprite);
 }
 
 void Splash::initialise(sf::Font& t_font)
@@ -13,7 +13,7 @@ void Splash::initialise(sf::Font& t_font)
 	
 	font = t_font;
 	text.setFont(font);
-	text.setCharacterSize(52);
+	text.setCharacterSize(12);
 	text.setFillColor(sf::Color::Magenta);
 	text.setString("Dose Duty");
 	text.setPosition(800 / 2 - 200, 600 / 2 - 100);

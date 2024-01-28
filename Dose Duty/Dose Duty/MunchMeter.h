@@ -21,5 +21,6 @@ public:
 	void gainMunchies();
 	void setMeterColor();
 	void lessenMunchies();
+	float getCurrentMuch() { return currentMuchMeter; };
 
 };

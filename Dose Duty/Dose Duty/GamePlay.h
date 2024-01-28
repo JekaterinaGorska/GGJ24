@@ -70,6 +70,9 @@ private:
 
 	MunchieObject munchieObject;
 
+	void handleDeadFriend();
+
+	bool deadFriend = false;
 	bool hasObject = false;
 	sf::Sprite UIObject;
 	sf::Texture UIWaterTexture;

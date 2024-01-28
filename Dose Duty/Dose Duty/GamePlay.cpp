@@ -81,7 +81,7 @@ void GamePlay::update(sf::Time& t_deltaTime)
 	));
 
 	InteractWithFriend();
-
+	handleDeadFriend();
 }
 /// <summary>
 /// draws everythign in the gameplay screen
@@ -294,7 +294,7 @@ void GamePlay::InteractWithFriend()
 {
 	if (m_friendInteractionArea.getGlobalBounds().intersects(m_playerInteractionArea.getGlobalBounds()))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && hasObject)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && hasObject && !deadFriend)
 		{
 			hasObject = false;
 			friendMunchMeter.lessenMunchies();
@@ -311,6 +311,16 @@ void GamePlay::setupSound()
 	}
 	sound.setBuffer(buffer);
 	sound.play();
+}
+
+void GamePlay::handleDeadFriend()
+{
+	if (friendMunchMeter.getCurrentMuch() <= 0.f)
+	{
+		deadFriend = true;
+		m_friendSprite.setRotation(90);
+		sound.stop();
+	}
 }
 
 void GamePlay::setUpUi()
