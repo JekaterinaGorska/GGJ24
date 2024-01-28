@@ -3,7 +3,7 @@
 #include <iostream>
 
 Game::Game() :
-	m_window{ sf::VideoMode{ 1900U, 1080U, 32U }, "Dose Duty" },
+	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "Dose Duty" },
 	m_exitGame{false}, //when true game will exit
 	//m_playerMovement{ 0.0f, 0.0f }// Initialize player movement
 	m_menus(m_window)

@@ -25,6 +25,8 @@ public:
 	sf::Clock clock;
 	static GameStates m_currentGameState;
 
+	
+
 private:
 	sf::RenderWindow m_window;
 	Splash m_splashScreen;

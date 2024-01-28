@@ -19,6 +19,10 @@ private:
 	void setupPlayer();
 	void setupFriends();
 	void setupCouch();
+	void setupForgroundChair();
+	void setupBackgroundChair();
+	void setupLounge();
+	
 
 	sf::RectangleShape m_player;
 	float playerSpeed;
@@ -27,6 +31,15 @@ private:
 
 	sf::Sprite m_couchSprite;
 	sf::Texture m_couchTexture;
+
+	sf::Sprite m_foregroundChairSprite;
+	sf::Texture m_foregroundChairTexture;
+
+	sf::Sprite m_backgroundChairSprite;
+	sf::Texture m_backgroundChairTexture;
+
+	sf::Sprite m_loungeChairSprite;
+	sf::Texture m_loungeChairTexture;
 
 	sf::Sprite m_backgroundSprite;
 	sf::Texture m_backgroundTexture;
