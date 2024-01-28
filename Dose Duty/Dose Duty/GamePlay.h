@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include<vector>
 #include"MunchMeter.h"
 #include"MunchieObject.h"
@@ -31,6 +32,10 @@ private:
 
 	void ItemCollisions();
 	void InteractWithFriend();
+	void setupSound();
+
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
 
 	sf::RectangleShape m_player;
 	float playerSpeed;
@@ -69,8 +74,6 @@ private:
 	sf::Sprite UIObject;
 	sf::Texture UIWaterTexture;
 	void setUpUi();
-
-
 
 	MunchMeter friendMunchMeter;
 	

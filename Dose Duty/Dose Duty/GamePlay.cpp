@@ -122,6 +122,7 @@ void GamePlay::initialise()
 	setupLounge();
 	setupWallpaper();
 	setUpUi();
+	setupSound();
 }
 
 void GamePlay::setupWallpaper()
@@ -300,6 +301,16 @@ void GamePlay::InteractWithFriend()
 			munchieObject.setBackToTable();
 		}
 	}
+}
+
+void GamePlay::setupSound()
+{
+	if (!buffer.loadFromFile("ASSETS\\SOUND\\nightcore.mp3"))
+	{
+		std::cout << "Problem loading sound" << std::endl;
+	}
+	sound.setBuffer(buffer);
+	sound.play();
 }
 
 void GamePlay::setUpUi()
