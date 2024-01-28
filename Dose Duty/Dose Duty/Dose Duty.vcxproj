@@ -23,12 +23,16 @@
     <ClCompile Include="GamePlay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menus.cpp" />
+    <ClCompile Include="MunchieObject.cpp" />
+    <ClCompile Include="MunchMeter.cpp" />
     <ClCompile Include="Splash.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePlay.h" />
     <ClInclude Include="Menus.h" />
+    <ClInclude Include="MunchieObject.h" />
+    <ClInclude Include="MunchMeter.h" />
     <ClInclude Include="Splash.h" />
   </ItemGroup>
   <ItemGroup>

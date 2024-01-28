@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include<vector>
-
+#include"MunchMeter.h"
+#include"MunchieObject.h"
 
 
 class GamePlay
@@ -19,15 +20,27 @@ private:
 	void setupPlayer();
 	void setupFriends();
 	void setupCouch();
+
 	void setupForgroundChair();
 	void setupBackgroundChair();
 	void setupLounge();
 	
 
+	void setUpObjects();
+	void animatePlayer();
+
+	void ItemCollisions();
+	void InteractWithFriend();
+
 	sf::RectangleShape m_player;
 	float playerSpeed;
 
 	sf::RectangleShape m_friend;
+	sf::Sprite m_friendSprite;
+	sf::Texture m_friendTexture;
+
+	sf::RectangleShape m_playerInteractionArea; 
+	sf::RectangleShape m_friendInteractionArea;
 
 	sf::Sprite m_couchSprite;
 	sf::Texture m_couchTexture;
@@ -45,6 +58,21 @@ private:
 	sf::Texture m_backgroundTexture;
 
 
+	sf::Sprite m_playerSprite;
+	sf::Texture m_playerTexture;
+	int playerTime = 0;
+	int playerFrame = 0;
+
+	MunchieObject munchieObject;
+
+	bool hasObject = false;
+	sf::Sprite UIObject;
+	sf::Texture UIWaterTexture;
+	void setUpUi();
+
+
+
+	MunchMeter friendMunchMeter;
 	
 };
 

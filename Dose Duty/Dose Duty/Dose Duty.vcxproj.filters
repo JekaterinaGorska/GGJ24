@@ -36,6 +36,12 @@
     <ClCompile Include="GamePlay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MunchMeter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MunchieObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -48,6 +54,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GamePlay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MunchMeter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MunchieObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
